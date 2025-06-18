@@ -27,4 +27,23 @@ SnapStore is a modern e-commerce web application built with **Next.js**. It incl
 ---
 
 ## 📁 Project Structure
+app/
+├── api/
+│   ├── products/
+│   └── reviews/
+├── dashboard/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── products/
+├── products/
+│   ├── [id]/
+│   └── page.tsx
+├── wishlist/
+└── globals.css
+public/
+├── images/
+utils/
+├── products.ts
+└── reviews.ts
+
 
