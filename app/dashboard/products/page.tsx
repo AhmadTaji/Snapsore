@@ -1,57 +1,109 @@
-// // app/dashboard/products/page.tsx
-// 'use client';
+// page.tsx
+'use client';
+import { useState } from 'react';
+import ProductCard from '@/app/components/productCard';
+import AddProductForm from '../../components/AddProductForm';
+import { Pagination } from '../../components/Pagination';
 
-// import { useEffect, useState } from 'react';
+const PAGE_SIZE = 6;
 
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-//   image: string;
-//   category: string;
-// }
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  brand: string;
+  image: string;
+};
 
-// export default function ProductManager() {
-//   const [products, setProducts] = useState<Product[]>([]);
+type ProductFormData = {
+  name: string;
+  category: string;
+  price: string;
+  description: string;
+  brand: string;
+  imageUrl: string;
+  imageFile?: File | null;
+};
 
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       const res = await fetch('/api/products');
-//       const data = await res.json();
-//       setProducts(data);
-//     };
+export default function DashboardProducts() {
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: 1,
+      name: 'Elegant Watch',
+      category: 'Accessories',
+      price: 89.99,
+      description: 'Elegant watch with leather strap and water-resistant design.',
+      brand: 'BrandB',
+      image: '/images/electronics.jpg',
+    },
+  ]);
 
-//     fetchProducts();
-//   }, []);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showAddForm, setShowAddForm] = useState(false);
 
-//   return (
-//     <div>
-//       <h1 className="text-3xl font-bold mb-6">🛒 Manage Products</h1>
-//       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//         {products.map(product => (
-//           <div
-//             key={product.id}
-//             className="p-4 border rounded shadow-sm flex flex-col md:flex-row items-center gap-4"
-//           >
-//             <img
-//               src={product.image}
-//               alt={product.name}
-//               className="w-24 h-24 object-cover rounded"
-//             />
-//             <div className="flex-1">
-//               <h2 className="text-xl font-semibold">{product.name}</h2>
-//               <p className="text-sm text-gray-600">{product.category}</p>
-//               <p className="text-green-600 font-bold">${product.price}</p>
-//             </div>
-//             <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-//               Delete
-//             </button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-export default function ProductsPage() {
-  return <h1>Manage Products</h1>;
+  const totalPages = Math.ceil(products.length / PAGE_SIZE);
+  const displayedProducts = products.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  function handleAdd(productData: ProductFormData) {
+    const newProduct: Product = {
+      id: Math.max(...products.map((p) => p.id), 0) + 1,
+      name: productData.name,
+      category: productData.category,
+      price: parseFloat(productData.price),
+      description: productData.description,
+      brand: productData.brand,
+      image: productData.imageUrl || '/images/default.png',
+    };
+    setProducts([...products, newProduct]);
+    setShowAddForm(false);
+  }
+
+  function handleDelete(id: number) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      setProducts(products.filter((p) => p.id !== id));
+    }
+  }
+
+  return (
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Manage Products</h1>
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+        >
+          Add Product
+        </button>
+      </div>
+
+      {showAddForm && (
+        <AddProductForm
+          onAdd={handleAdd}
+          onCancel={() => setShowAddForm(false)}
+        />
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {displayedProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            onEdit={() => alert('Edit functionality coming soon!')}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
+    </div>
+  );
 }
