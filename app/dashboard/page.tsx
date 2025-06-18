@@ -12,7 +12,7 @@ export default async function DashboardHome() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-3xl font-bold">📊 Dashboard</h1>
+      <h1 className="text-3xl font-bold">📊 Dashboard 📊 </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white shadow rounded p-6">
           <h2 className="text-lg font-semibold mb-2">Total Products</h2>
