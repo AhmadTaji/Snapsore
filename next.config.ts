@@ -12,8 +12,15 @@
 //     domains: ['images.unsplash.com', 'cdn.pixabay.com'], // add any image hosts you use
 //   },
 // };
+// module.exports = {
+//   images: {
+//     domains: ['images.unsplash.com', 'cdn.pixabay.com'],
+//   },
+// };
 module.exports = {
   images: {
-    domains: ['images.unsplash.com', 'cdn.pixabay.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '**' }
+    ],
   },
 };
