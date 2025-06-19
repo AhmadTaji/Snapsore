@@ -84,10 +84,34 @@
 
 //   return NextResponse.json(products);
 // }
+// import { NextResponse } from 'next/server';
+// import {products } from "../../../utils/products"
+
+// export async function GET() {
+//   return NextResponse.json(products);
+// }
+
 import { NextResponse } from 'next/server';
-import {products } from "../../../utils/products"
+import { products } from '../../../utils/products'; // Make sure this is mutable
 
 export async function GET() {
   return NextResponse.json(products);
 }
 
+export async function POST(request: Request) {
+  const body = await request.json();
+
+  const newProduct = {
+    id: Math.max(...products.map((p) => p.id), 0) + 1,
+    name: body.name,
+    category: body.category,
+    price: parseFloat(body.price),
+    description: body.description,
+    brand: body.brand,
+    image: body.image || '/images/default.png',
+  };
+
+  products.push(newProduct);
+
+  return NextResponse.json(newProduct, { status: 201 });
+}
