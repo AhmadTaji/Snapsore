@@ -1,5 +1,155 @@
+
+// 'use client';
+
+// import React, { useState } from 'react';
+
+// type ProductFormData = {
+//   name: string;
+//   category: string;
+//   price: string;
+//   description: string;
+//   brand: string;
+// };
+
+// type Props = {
+//   onAdd: (productData: ProductFormData, imageFile: File | null) => void;
+//   onCancel: () => void;
+// };
+
+// export default function AddProductForm({ onAdd, onCancel }: Props) {
+//   const [formData, setFormData] = useState<ProductFormData>({
+//     name: '',
+//     category: '',
+//     price: '',
+//     description: '',
+//     brand: '',
+//   });
+
+//   const [imageFile, setImageFile] = useState<File | null>(null);
+
+//   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({ ...prev, [name]: value }));
+//   }
+
+//   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+//     if (e.target.files && e.target.files.length > 0) {
+//       setImageFile(e.target.files[0]);
+//     }
+//   }
+
+//   function handleSubmit(e: React.FormEvent) {
+//     e.preventDefault();
+//     onAdd(formData, imageFile);
+//   }
+
+//   return (
+//     <form
+//       onSubmit={handleSubmit}
+//       className="max-w-xl mx-auto bg-white border border-gray-200 p-6 rounded-2xl shadow-lg space-y-6"
+//     >
+//       <h2 className="text-2xl font-bold text-gray-800 mb-4">🛍️ Add New Product</h2>
+
+//       {/* Name */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Product Name</label>
+//         <input
+//           name="name"
+//           value={formData.name}
+//           onChange={handleChange}
+//           required
+//           className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+//           placeholder="E.g., iPhone 14 Pro"
+//         />
+//       </div>
+
+//       {/* Category */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Category</label>
+//         <input
+//           name="category"
+//           value={formData.category}
+//           onChange={handleChange}
+//           required
+//           className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+//           placeholder="E.g., Electronics"
+//         />
+//       </div>
+
+//       {/* Price */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Price ($)</label>
+//         <input
+//           name="price"
+//           value={formData.price}
+//           onChange={handleChange}
+//           required
+//           type="number"
+//           step="0.01"
+//           className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+//           placeholder="E.g., 999.99"
+//         />
+//       </div>
+
+//       {/* Description */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Description</label>
+//         <textarea
+//           name="description"
+//           value={formData.description}
+//           onChange={handleChange}
+//           rows={4}
+//           className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+//           placeholder="Enter a short product description"
+//         />
+//       </div>
+
+//       {/* Brand */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Brand</label>
+//         <input
+//           name="brand"
+//           value={formData.brand}
+//           onChange={handleChange}
+//           className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+//           placeholder="E.g., Apple"
+//         />
+//       </div>
+
+//       {/* Image Upload */}
+//       <div>
+//         <label className="block mb-1 text-gray-700 font-medium">Product Image</label>
+//         <input
+//           type="file"
+//           accept="image/*"
+//           onChange={handleFileChange}
+//           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+//         />
+//       </div>
+
+//       {/* Buttons */}
+//       <div className="flex justify-end gap-4 pt-4">
+//         <button
+//           type="button"
+//           onClick={onCancel}
+//           className="px-4 py-2 rounded-lg border border-gray-400 text-gray-600 hover:bg-gray-100 transition"
+//         >
+//           Cancel
+//         </button>
+
+//         <button
+//           type="submit"
+//           className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+//         >
+//           Add Product
+//         </button>
+//       </div>
+//     </form>
+//   );
+// }
 'use client';
-import { useState, ChangeEvent, FormEvent } from 'react';
+
+import React, { useState } from 'react';
 
 type ProductFormData = {
   name: string;
@@ -7,164 +157,151 @@ type ProductFormData = {
   price: string;
   description: string;
   brand: string;
-  imageUrl: string;
-  imageFile?: File | null;
+  imageUrl: string; // added for remote images
 };
 
-const categories = ['Accessories', 'Electronics', 'Fashion', 'Home'];
-
 type Props = {
-  onAdd: (data: ProductFormData) => void;
+  onAdd: (productData: ProductFormData, imageFile: File | null) => void;
   onCancel: () => void;
 };
 
 export default function AddProductForm({ onAdd, onCancel }: Props) {
-  const [form, setForm] = useState<ProductFormData>({
+  const [formData, setFormData] = useState<ProductFormData>({
     name: '',
     category: '',
     price: '',
     description: '',
     brand: '',
     imageUrl: '',
-    imageFile: null,
   });
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
 
-    if (name === 'imageFile') {
-      const target = e.target as HTMLInputElement;
-      if (target.files && target.files.length > 0) {
-        setForm((f) => ({ ...f, imageFile: target.files![0] }));
-      }
-    } else {
-      setForm((f) => ({ ...f, [name]: value }));
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      setImageFile(e.target.files[0]);
     }
-  };
+  }
 
-  const handleSubmit = (e: FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    const { name, category, price, description, brand } = form;
-
-    if (!name || !category || !price || !description || !brand) {
-      alert('Please fill all required fields.');
-      return;
-    }
-
-    onAdd(form);
-  };
+    onAdd(formData, imageFile); // Send both: URL + File (API will choose which one to use)
+  }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto space-y-4"
+      className="max-w-xl mx-auto bg-white border border-gray-200 p-6 rounded-2xl shadow-lg space-y-6"
     >
-      <h3 className="text-xl font-semibold mb-4">Add New Product</h3>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">🛍️ Add New Product</h2>
 
+      {/* Name */}
       <div>
-        <label className="block mb-1 font-medium">Product Name</label>
+        <label className="block mb-1 text-gray-700 font-medium">Product Name</label>
         <input
           name="name"
-          type="text"
-          value={form.name}
+          value={formData.name}
           onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
           required
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="E.g., iPhone 14 Pro"
         />
       </div>
 
+      {/* Category */}
       <div>
-        <label className="block mb-1 font-medium">Category</label>
-        <select
+        <label className="block mb-1 text-gray-700 font-medium">Category</label>
+        <input
           name="category"
-          value={form.category}
+          value={formData.category}
           onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
           required
-        >
-          <option value="">Select category</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="E.g., Electronics"
+        />
       </div>
 
+      {/* Price */}
       <div>
-        <label className="block mb-1 font-medium">Price ($)</label>
+        <label className="block mb-1 text-gray-700 font-medium">Price ($)</label>
         <input
           name="price"
+          value={formData.price}
+          onChange={handleChange}
           type="number"
           step="0.01"
-          value={form.price}
-          onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
           required
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="E.g., 999.99"
         />
       </div>
 
+      {/* Description */}
       <div>
-        <label className="block mb-1 font-medium">Description</label>
+        <label className="block mb-1 text-gray-700 font-medium">Description</label>
         <textarea
           name="description"
-          value={form.description}
+          value={formData.description}
           onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
           rows={3}
-          required
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="Product details here..."
         />
       </div>
 
+      {/* Brand */}
       <div>
-        <label className="block mb-1 font-medium">Brand</label>
+        <label className="block mb-1 text-gray-700 font-medium">Brand</label>
         <input
           name="brand"
-          type="text"
-          value={form.brand}
+          value={formData.brand}
           onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
-          required
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="E.g., Apple"
         />
       </div>
 
+      {/* Image from URL */}
       <div>
-        <label className="block mb-1 font-medium">Image URL</label>
+        <label className="block mb-1 text-gray-700 font-medium">Image URL (optional)</label>
         <input
           name="imageUrl"
-          type="text"
-          value={form.imageUrl}
+          value={formData.imageUrl}
           onChange={handleChange}
-          className="w-full border rounded-md px-3 py-2"
-          placeholder="Enter image URL"
+          className="w-full border border-gray-300 rounded-lg px-4 py-2"
+          placeholder="https://example.com/image.jpg"
         />
       </div>
 
+      {/* Image from Local File */}
       <div>
-        <label className="block mb-1 font-medium">Or Upload Image</label>
+        <label className="block mb-1 text-gray-700 font-medium">Upload Image (optional)</label>
         <input
-          name="imageFile"
           type="file"
           accept="image/*"
-          onChange={handleChange}
-          className="w-full"
+          onChange={handleFileChange}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
         />
       </div>
 
-      <div className="flex justify-end space-x-3 mt-4">
+      {/* Actions */}
+      <div className="flex justify-end gap-4 pt-4">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100"
+          className="px-4 py-2 rounded-lg border border-gray-400 text-gray-600 hover:bg-gray-100 transition"
         >
           Cancel
         </button>
+
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
         >
           Add Product
         </button>
