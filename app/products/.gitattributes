@@ -1,0 +1,9 @@
+# Normalize line endings to LF (Unix-style)
+* text=auto eol=lf
+
+# Optional: treat specific files differently
+*.ts text
+*.tsx text
+*.js text
+*.json text
+*.md text
