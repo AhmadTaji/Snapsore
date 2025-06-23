@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -34,7 +35,6 @@ export default function DashboardPage() {
     fetchProducts();
   }, []);
 
-  // Sort for recently added and edited
   const recentlyAdded = [...products]
     .sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime())
     .slice(0, 3);
@@ -43,48 +43,46 @@ export default function DashboardPage() {
     .sort((a, b) => new Date(b.updatedAt || '').getTime() - new Date(a.updatedAt || '').getTime())[0];
 
   return (
-    <section className="max-w-6xl mx-auto mt-10 px-4">
-      <header className="mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">Dashboard</h1>
-        <p className="text-lg text-gray-600">Welcome back! Here’s an overview of your store’s products.</p>
+    <section className="space-y-6 mt-2 px-2">
+      <header className="mb-4">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-base text-gray-600">Welcome back! Here’s an overview of your store’s products.</p>
       </header>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-gradient-to-br from-blue-600 to-blue-400 text-white rounded-xl shadow-lg p-6 flex items-center gap-4">
-          <BarChart3 className="w-10 h-10 opacity-80" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="bg-gradient-to-br from-blue-600 to-blue-400 text-white rounded-lg shadow p-4 flex items-center gap-3">
+          <BarChart3 className="w-8 h-8 opacity-80" />
           <div>
-            <div className="text-3xl font-bold">{products.length}</div>
-            <div className="text-sm opacity-80">Total Products</div>
+            <div className="text-2xl font-bold">{products.length}</div>
+            <div className="text-xs opacity-80">Total Products</div>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-green-500 to-green-400 text-white rounded-xl shadow-lg p-6 flex items-center gap-4">
-          <PlusCircle className="w-10 h-10 opacity-80" />
+        <div className="bg-gradient-to-br from-green-500 to-green-400 text-white rounded-lg shadow p-4 flex items-center gap-3">
+          <PlusCircle className="w-8 h-8 opacity-80" />
           <div>
-            <div className="text-3xl font-bold">{recentlyAdded.length}</div>
-            <div className="text-sm opacity-80">Recently Added</div>
+            <div className="text-2xl font-bold">{recentlyAdded.length}</div>
+            <div className="text-xs opacity-80">Recently Added</div>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-yellow-500 to-yellow-400 text-white rounded-xl shadow-lg p-6 flex items-center gap-4">
-          <RefreshCcw className="w-10 h-10 opacity-80" />
+        <div className="bg-gradient-to-br from-yellow-500 to-yellow-400 text-white rounded-lg shadow p-4 flex items-center gap-3">
+          <RefreshCcw className="w-8 h-8 opacity-80" />
           <div>
-            <div className="text-3xl font-bold">
+            <div className="text-2xl font-bold">
               {recentlyEdited ? recentlyEdited.name : <span className="text-base">N/A</span>}
             </div>
-            <div className="text-sm opacity-80">Recently Edited</div>
+            <div className="text-xs opacity-80">Recently Edited</div>
           </div>
         </div>
       </div>
 
-      {/* Details Panels */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-blue-700">
-            <PlusCircle className="w-5 h-5" /> Recently Added Products
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-lg shadow p-4">
+          <h2 className="font-semibold text-base mb-2 flex items-center gap-2 text-blue-700">
+            <PlusCircle className="w-4 h-4" /> Recently Added Products
           </h2>
           <ul className="divide-y divide-gray-100">
             {recentlyAdded.length > 0 ? recentlyAdded.map((p) => (
-              <li key={p.id} className="py-3 flex justify-between items-center">
+              <li key={p.id} className="py-2 flex justify-between items-center">
                 <div>
                   <div className="font-medium text-gray-900">{p.name}</div>
                   <div className="text-xs text-gray-500">{p.category} • {p.brand}</div>
@@ -97,15 +95,15 @@ export default function DashboardPage() {
                   </span>
                 </div>
               </li>
-            )) : <li className="text-gray-400 py-3">No products yet</li>}
+            )) : <li className="text-gray-400 py-2">No products yet</li>}
           </ul>
         </div>
-        <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="font-semibold text-lg mb-4 flex items-center gap-2 text-yellow-700">
-            <RefreshCcw className="w-5 h-5" /> Recently Edited Product
+        <div className="bg-white rounded-lg shadow p-4">
+          <h2 className="font-semibold text-base mb-2 flex items-center gap-2 text-yellow-700">
+            <RefreshCcw className="w-4 h-4" /> Recently Edited Product
           </h2>
           {recentlyEdited ? (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <div className="font-medium text-gray-900">{recentlyEdited.name}</div>
               <div className="text-xs text-gray-500">{recentlyEdited.category} • {recentlyEdited.brand}</div>
               <div className="text-gray-700 font-semibold">${recentlyEdited.price}</div>
@@ -122,4 +120,3 @@ export default function DashboardPage() {
     </section>
   );
 }
-

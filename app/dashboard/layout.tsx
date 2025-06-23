@@ -1,100 +1,4 @@
 
-
-// 'use client';
-
-// import { LayoutDashboard, Box, BarChart3 } from "lucide-react";
-// import Link from "next/link";
-// import LogoutButton from "../components/Logout";
-// import { useEffect, useState } from "react";
-// import { jwtDecode } from 'jwt-decode';
-// import { usePathname } from "next/navigation";
-
-// type JwtPayload = {
-//   name: string;
-// };
-
-// const navItems = [
-//   { label: "Dashboard", href: "/dashboard", icon: "🏠" },
-//   { label: "Products", href: "/dashboard/products", icon: "📦" },
-//   { label: "Analytics", href: "/dashboard/analytics", icon: "📊" },
-// ];
-
-// export default function Layout({ children }: { children: React.ReactNode }) {
-//   const [adminName, setAdminName] = useState("Admin");
-//   const pathname = usePathname();
-
-//   useEffect(() => {
-//     const cookieToken = document.cookie
-//       .split("; ")
-//       .find((row) => row.startsWith("admin-token="))
-//       ?.split("=")[1];
-
-//     if (cookieToken) {
-//       try {
-//         const decoded: JwtPayload = jwtDecode(cookieToken);
-//         if (decoded?.name) setAdminName(decoded.name);
-//       } catch (err) {
-//         console.error("Invalid token:", err);
-//       }
-//     }
-//   }, []);
-
-//   return (
-//     <div className="flex min-h-screen bg-gray-50 text-gray-800 font-sans">
-//       {/* Sidebar */}
-//       <aside className="w-64 bg-white border-r shadow-lg flex flex-col justify-between h-screen fixed md:relative z-20">
-//         {/* User Info */}
-//         <div className="px-6 py-6 border-b flex items-center gap-4">
-//           <div className="bg-blue-600 text-white font-semibold rounded-full w-10 h-10 flex items-center justify-center text-lg">
-//             {adminName?.charAt(0).toUpperCase() || "A"}
-//           </div>
-//           <div className="truncate">
-//             <p className="text-sm font-medium text-gray-900 truncate">{adminName}</p>
-//             <p className="text-xs text-gray-500">Administrator</p>
-//           </div>
-//         </div>
-
-//         {/* Navigation */}
-//         <nav className="flex-1 p-6 space-y-1">
-//           {navItems.map(({ href, label, icon }) => {
-//             const isActive = pathname === href;
-//             return (
-//               <Link
-//                 key={href}
-//                 href={href}
-//                 className={`group flex items-center gap-3 px-4 py-2.5 rounded-md transition-all duration-200 ${
-//                   isActive
-//                     ? "bg-blue-600 text-white font-semibold shadow-sm"
-//                     : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-//                 }`}
-//               >
-//                 <span className={`${isActive ? "text-white" : "text-gray-500 group-hover:text-blue-600"}`}>
-//                   {icon}
-//                 </span>
-//                 <span className="text-sm">{label}</span>
-//               </Link>
-//             );
-//           })}
-//         </nav>
-
-//         {/* Logout */}
-//         <div className="p-6 border-t">
-//           <LogoutButton />
-//         </div>
-//       </aside>
-
-//       {/* Main Content */}
-//       <main className="flex-1 ml-64 px-6 py-10 overflow-y-auto">
-//         <header className="mb-6">
-//           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-//           <p className="text-sm text-gray-500 mt-1">Manage your app with confidence</p>
-//         </header>
-
-//         <section className="bg-white rounded-xl shadow p-6">{children}</section>
-//       </main>
-//     </div>
-//   );
-// }
 'use client';
 
 import { LayoutDashboard, Box, BarChart3 } from 'lucide-react';
@@ -176,9 +80,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 px-8 py-10 overflow-y-auto">
+      {/* <main className="flex-1 ml-64 px-8 py-10 overflow-y-auto">
         {children}
-      </main>
+      </main> */}
+    <main className="flex-1 ml-64 px-2 py-2 overflow-y-auto">
+  {children}
+</main>
     </div>
   );
 }
