@@ -4,7 +4,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 
 type Product = {
-  id: number;
+  _id: string; // <-- CHANGED from id: number
   name: string;
   category: string;
   price: number;
@@ -15,8 +15,8 @@ type Product = {
 
 type Props = {
   product: Product;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  onEdit: (id: string) => void;   // <-- CHANGED from number to string
+  onDelete: (id: string) => void; // <-- CHANGED from number to string
 };
 
 export default function ProductCard({ product, onEdit, onDelete }: Props) {
@@ -34,7 +34,7 @@ export default function ProductCard({ product, onEdit, onDelete }: Props) {
       <p className="text-sm text-gray-600 mb-3">Brand: {product.brand}</p>
       <div className="mt-auto flex space-x-3">
         <button
-          onClick={() => onEdit(product.id)}
+          onClick={() => onEdit(product._id)} // <-- CHANGED from product.id
           className="flex items-center text-blue-600 hover:text-blue-800"
           aria-label="Edit product"
         >
@@ -42,7 +42,7 @@ export default function ProductCard({ product, onEdit, onDelete }: Props) {
           Edit
         </button>
         <button
-          onClick={() => onDelete(product.id)}
+          onClick={() => onDelete(product._id)} // <-- CHANGED from product.id
           className="flex items-center text-red-600 hover:text-red-800"
           aria-label="Delete product"
         >

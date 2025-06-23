@@ -1,5 +1,3 @@
-
-
 // 'use client';
 // import { useState, useEffect } from 'react';
 // import ProductCard from "../../components/productCard"
@@ -132,8 +130,9 @@ import AddProductForm from '../../components/AddProductForm';
 import { Pagination } from '../../components/Pagination';
 import LoadingSpinner from '../../components/loadingSpinner';
 
+// Example Product type
 type Product = {
-  id: number;
+  _id: string;
   name: string;
   category: string;
   price: number;
@@ -181,7 +180,7 @@ export default function DashboardPage() {
     setShowAddForm(false);
   }
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     const confirmDelete = confirm('Are you sure?');
     if (!confirmDelete) return;
 
