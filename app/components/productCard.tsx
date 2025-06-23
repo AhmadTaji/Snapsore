@@ -4,7 +4,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 
 type Product = {
-  _id: string; // <-- CHANGED from id: number
+  _id: string; //
   name: string;
   category: string;
   price: number;
