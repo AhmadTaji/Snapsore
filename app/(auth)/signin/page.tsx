@@ -19,6 +19,8 @@ export default function LoginPage() {
     }
 
     // ✅ Navigate to dashboard after login
+    document.dispatchEvent(new Event('user-logged-in'));
+
     router.push('/products');
   };
 

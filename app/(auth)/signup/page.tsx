@@ -16,7 +16,7 @@ export default function RegisterPage() {
 
     if (!res.ok) throw new Error("Failed to register");
 
-    router.push("/loginuser"); // Redirect to login after successful registration
+    router.push("/signin"); // Redirect to login after successful registration
     // Optionally, you can show a success message or toast here 
     // e.g., toast.success("Registration successful! Please log in.");  
   };
